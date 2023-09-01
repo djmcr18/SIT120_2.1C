@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Experiment</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.global.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            margin: 10px 0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <h1>Vue 3 Experiment</h1>
+
+        <!-- Conditional Rendering Examples -->
+        <div class="task-item">
+            <p v-if="TrueFalse">This message will appear if True. :)</p>
+            <p v-else>This message will appear if False. :(</p>
+        </div>
+
+        <div class="task-item">
+            <p v-show="showParagraph">This paragraph will be shown/hidden based on showParagraph.</p>
+        </div>
+
+        <!-- Demonstrating v-if with v-for -->
+        <div class="task-item">
+            <ul class="task-list">
+                <li v-for="item in items" :key="item.id">
+                    <span>{{ item.name }}</span>
+                    <span v-if="item.completed"> (Completed)</span>
+                </li>
+            </ul>
+        </div>        
+        
+        <!-- Form Input Handling -->
+        <div class="task-item">
+            <input type="text" v-model="inputText" placeholder="Type something...">
+            <p>You typed: {{ inputText }}</p>
+        </div>
+
+        <!-- Toggle Button -->
+        <div class="button-container">
+            <button @click="toggleTrueFalse">{{ TrueFalse ? 'True' : 'False' }}</button>
+            <button @click="toggleShowParagraph">Toggle Show Paragraph</button>
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    TrueFalse: true,
+                    showParagraph: true,
+                    showElseIf: false,
+                    items: [
+                        { id: 1, name: 'Apple', completed: true },
+                        { id: 2, name: 'Banana', completed: false },
+                        { id: 3, name: 'Grapes', completed: true }
+                    ],
+                    inputText: ''
+                };
+            },
+            methods: {
+                toggleTrueFalse() {
+                    this.TrueFalse = !this.TrueFalse;
+                },
+                toggleShowParagraph() {
+                    this.showParagraph = !this.showParagraph;
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

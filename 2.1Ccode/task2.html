@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 To-do List</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.global.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .todo-app {
+            text-align: center;
+        }
+
+        .header {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .task-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            max-width: 90%;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .task-text {
+            flex: 1;
+            font-size: 18px;
+        }
+
+        .task-text.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .remove-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="todo-app">
+            <h1 class="header">To-do List</h1>
+            <input class="task-input" v-model="newTask" @keyup.enter="addTask" placeholder="Enter a new task">
+            <ul class="task-list">
+                <li v-for="(task, index) in tasks" :key="index" class="task-item">
+                    <input type="checkbox" v-model="task.completed">
+                    <span :class="{ 'task-text': true, 'completed': task.completed }">{{ task.text }}</span>
+                    <button class="remove-button" @click="removeTask(index)">Remove</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    newTask: '',
+                    tasks: []
+                };
+            },
+            methods: {
+                addTask() {
+                    if (this.newTask.trim() !== '') {
+                        this.tasks.push({
+                            text: this.newTask,
+                            completed: false
+                        });
+                        this.newTask = '';
+                    }
+                },
+                removeTask(index) {
+                    this.tasks.splice(index, 1);
+                }
+            }
+        });
+
+        app.mount('.todo-app');
+    </script>
+</body>
+</html>
